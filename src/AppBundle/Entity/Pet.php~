@@ -28,6 +28,20 @@ class Pet extends Product
      */
     private $label;
 
+    /**
+     * @var Pet
+     *
+     * @ORM\OneToMany(targetEntity="Pet", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @var Pet
+     *
+     * @ORM\ManyToOne(targetEntity="Pet", inversedBy="children")
+     */
+    private $parent;
+
 
     /**
      * Get id
@@ -61,5 +75,63 @@ class Pet extends Product
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * Add parent
+     *
+     * @param \AppBundle\Entity\Pet $parent
+     *
+     * @return Pet
+     */
+    public function addParent(\AppBundle\Entity\Pet $parent)
+    {
+        $this->parent[] = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Remove parent
+     *
+     * @param \AppBundle\Entity\Pet $parent
+     */
+    public function removeParent(\AppBundle\Entity\Pet $parent)
+    {
+        $this->parent->removeElement($parent);
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set children
+     *
+     * @param \AppBundle\Entity\Pet $children
+     *
+     * @return Pet
+     */
+    public function setChildren(\AppBundle\Entity\Pet $children = null)
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * Get children
+     *
+     * @return \AppBundle\Entity\Pet
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }
