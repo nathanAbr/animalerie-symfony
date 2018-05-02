@@ -33,3 +33,9 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+
+    user_service:
+        class: AppBundle\Service\UserService
+        arguments: ["@=service('doctrine.orm.entity_manager')"]
+
