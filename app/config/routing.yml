@@ -5,3 +5,7 @@ app:
 create_user:
     path: /create/user
     defaults: {_controller: AppBundle:User:add}
+
+create_pannier:
+    path: /create/panier
+    defaults: {_controller: AppBundle:Indent:createIndent}

@@ -40,6 +40,14 @@ class Indent
     private $indentDetails;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="indentNumber", type="string", length=255, nullable=true,unique=true)
+     */
+    private $indentNumber;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -136,5 +144,29 @@ class Indent
     public function getIndentDetails()
     {
         return $this->indentDetails;
+    }
+
+    /**
+     * Set indentNumber
+     *
+     * @param string $indentNumber
+     *
+     * @return Indent
+     */
+    public function setIndentNumber($indentNumber)
+    {
+        $this->indentNumber = $indentNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get indentNumber
+     *
+     * @return string
+     */
+    public function getIndentNumber()
+    {
+        return $this->indentNumber;
     }
 }

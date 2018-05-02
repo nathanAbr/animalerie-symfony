@@ -15,6 +15,7 @@ class UserController extends Controller
         $form = $this->createForm(UserForm::class);
         $form->handleRequest($request);
 
+
         if($form->isValid() && $form->isSubmitted()){
             $user = $form->getData();
             $userService->add($user);

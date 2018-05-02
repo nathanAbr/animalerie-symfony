@@ -35,9 +35,17 @@ class Indent
 
 
     /**
-     * @ORM\OneToMany(targetEntity="IndentDetails", mappedBy="indent")
+     * @ORM\OneToMany(targetEntity="IndentDetails", mappedBy="indent",cascade={"persist","remove"})
      */
     private $indentDetails;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="indentNumber", type="string", length=255, nullable=true,unique=true)
+     */
+    private $indentNumber;
+
 
     /**
      * Get id

@@ -39,3 +39,9 @@ services:
         class: AppBundle\Service\UserService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
+    indent_service:
+        class: AppBundle\Service\IndentService
+        arguments: ["@=service('doctrine.orm.entity_manager')"]
+
+
+
