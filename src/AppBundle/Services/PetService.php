@@ -10,7 +10,9 @@ namespace AppBundle\Services;
 
 
 use AppBundle\Entity\Pet;
+use AppBundle\Repository\PetRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class PetService
 {
@@ -21,5 +23,22 @@ class PetService
     {
         $this->entityManager = $entityManager;
         $this->repository = $this->entityManager->getRepository(Pet::class);
+    }
+
+    public function getPetByKind(){
+        return $this->repository->findPetsByKind();
+    }
+
+    public function getFirstKindOfPet(){
+        return $this->repository->findFirstKindOfPet();
+    }
+
+    public function addPet($pet){
+        try{
+            $this->entityManager->persist($pet);
+            $this->entityManager->flush();
+        } catch (DBALException $e){
+            return $e->getMessage();
+        }
     }
 }
