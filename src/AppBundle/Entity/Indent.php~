@@ -72,5 +72,69 @@ class Indent
     {
         return $this->date;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->indentDetails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Indent
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add indentDetail
+     *
+     * @param \AppBundle\Entity\IndentDetails $indentDetail
+     *
+     * @return Indent
+     */
+    public function addIndentDetail(\AppBundle\Entity\IndentDetails $indentDetail)
+    {
+        $this->indentDetails[] = $indentDetail;
+
+        return $this;
+    }
+
+    /**
+     * Remove indentDetail
+     *
+     * @param \AppBundle\Entity\IndentDetails $indentDetail
+     */
+    public function removeIndentDetail(\AppBundle\Entity\IndentDetails $indentDetail)
+    {
+        $this->indentDetails->removeElement($indentDetail);
+    }
+
+    /**
+     * Get indentDetails
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIndentDetails()
+    {
+        return $this->indentDetails;
+    }
+}

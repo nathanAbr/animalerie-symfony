@@ -30,7 +30,7 @@ class IndentDetails
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Indent", inversedBy="indentsdetails")
+     * @ORM\ManyToOne(targetEntity="Indent", inversedBy="indentDetails")
      */
     private $indent;
 

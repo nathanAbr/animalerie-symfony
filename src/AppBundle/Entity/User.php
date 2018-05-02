@@ -38,21 +38,21 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="adress", type="string", length=255)
+     * @ORM\Column(name="adress", type="string", length=255, nullable=true,unique=false)
      */
     private $adress;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="admin", type="boolean")
+     * @ORM\Column(name="admin", type="boolean",nullable=true,unique=false,options={"default"=0})
      */
     private $admin;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean",nullable=true,unique=false,options={"default"=1})
      */
     private $active;
 
@@ -233,4 +233,5 @@ class User
     {
         return $this->indents;
     }
+
 }

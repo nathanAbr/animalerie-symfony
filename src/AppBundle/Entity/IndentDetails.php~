@@ -67,5 +67,28 @@ class IndentDetails
     {
         return $this->quantity;
     }
-}
 
+    /**
+     * Set indent
+     *
+     * @param \AppBundle\Entity\Indent $indent
+     *
+     * @return IndentDetails
+     */
+    public function setIndent(\AppBundle\Entity\Indent $indent = null)
+    {
+        $this->indent = $indent;
+
+        return $this;
+    }
+
+    /**
+     * Get indent
+     *
+     * @return \AppBundle\Entity\Indent
+     */
+    public function getIndent()
+    {
+        return $this->indent;
+    }
+}

@@ -38,21 +38,21 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="adress", type="string", length=255)
+     * @ORM\Column(name="adress", type="string", length=255, nullable=true,unique=false)
      */
     private $adress;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="admin", type="boolean")
+     * @ORM\Column(name="admin", type="boolean",nullable=true,unique=false,options={"default"=0})
      */
     private $admin;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean",nullable=true,unique=false,options={"default"=1})
      */
     private $active;
 
@@ -192,5 +192,46 @@ class User
     {
         return $this->active;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->indents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add indent
+     *
+     * @param \AppBundle\Entity\Indent $indent
+     *
+     * @return User
+     */
+    public function addIndent(\AppBundle\Entity\Indent $indent)
+    {
+        $this->indents[] = $indent;
+
+        return $this;
+    }
+
+    /**
+     * Remove indent
+     *
+     * @param \AppBundle\Entity\Indent $indent
+     */
+    public function removeIndent(\AppBundle\Entity\Indent $indent)
+    {
+        $this->indents->removeElement($indent);
+    }
+
+    /**
+     * Get indents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIndents()
+    {
+        return $this->indents;
+    }
+
+}

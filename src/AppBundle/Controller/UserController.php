@@ -10,15 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
-    //public function addAction(Request $request, UserService $userService)
-    public function addAction(Request $request)
+    public function addAction(Request $request, UserService $userService)
     {
         $form = $this->createForm(UserForm::class);
         $form->handleRequest($request);
 
         if($form->isValid() && $form->isSubmitted()){
             $user = $form->getData();
-            //$userService->add($user);
+            $userService->add($user);
             return $this->redirect($request->getUri());
         }
 

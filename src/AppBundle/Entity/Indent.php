@@ -35,7 +35,7 @@ class Indent
 
 
     /**
-     * @ORM\OneToMany(targetEntity="IndentDetails", mappedBy="indent")
+     * @ORM\OneToMany(targetEntity="IndentDetails", mappedBy="indent",cascade={"persist","remove"})
      */
     private $indentDetails;
 
