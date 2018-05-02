@@ -33,3 +33,23 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    product_service:
+        class: AppBundle\Services\ProductService
+        arguments: ["@=service('doctrine.orm.entity_manager')"]
+
+    pet_service:
+        class: AppBundle\Services\PetService
+        arguments: ["@=service('doctrine.orm.entity_manager')"]
+
+    object_service:
+        class: AppBundle\Services\ObjectService
+        arguments: ["@=service('doctrine.orm.entity_manager')"]
+
+    object_type_service:
+        class: AppBundle\Services\ObjectTypeService
+        arguments: ["@=service('doctrine.orm.entity_manager')"]
+
+    picture_service:
+        class: AppBundle\Services\PictureService
+        arguments: ["@=service('doctrine.orm.entity_manager')"]
