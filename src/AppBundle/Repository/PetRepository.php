@@ -13,28 +13,41 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class PetRepository extends EntityRepository
 {
-    public function findPetsByKind($id = null){
-        $rsm = new ResultSetMapping();
-        $rsm->addEntityResult('AppBundle:Pet', 'pet');
-        $rsm->addFieldResult('pet', 'id', 'id');
-        $rsm->addFieldResult('pet', 'parent', 'parent');
+    public function findPetsByKindParent($id = null){
 
-        $query = $this->getEntityManager()->createNativeQuery('
-            with recursive cte as (
-                    SELECT pet.id, pet.parent
+        $rsm = new ResultSetMapping();
+
+        if($id === null){
+            $query = $this->getEntityManager()->createNativeQuery('
+            CREATE TEMPORARY TABLE cte AS (
+                    SELECT pet.id, pet.parent_id
                     FROM   pet
-                    WHERE  pet.parent = ?
-            
+                    WHERE  pet.parent_id IS NULL
+                    
                     UNION  ALL
             
-                    SELECT e.id, e.parent
+                    SELECT e.id, e.parent_id
                     FROM   cte c
-                    JOIN   group e ON e.id = c.parent
-             )
+                    JOIN   pet e ON e.id = c.parent_id
+             );
+            SELECT * FROM cte;', $rsm);
+        } else {
+            $query = $this->getEntityManager()->createNativeQuery('
+            CREATE TEMPORARY TABLE cte AS (
+                    SELECT pet.id, pet.parent_id
+                    FROM   pet
+                    WHERE  pet.parent_id = ?
+                    
+                    UNION  ALL
+            
+                    SELECT e.id, e.parent_id
+                    FROM   cte c
+                    JOIN   pet e ON e.id = c.parent_id
+             );
             SELECT * FROM cte;', $rsm);
 
-        $query->setParameter(1, $id);
-
+            $query->setParameter(1, $id);
+        }
         return $query->getResult();
     }
 
@@ -43,7 +56,7 @@ class PetRepository extends EntityRepository
         $rsm = new ResultSetMapping();
 
         $query = $this->getEntityManager()->createNativeQuery('
-            SELECT pet.label FROM pet WHERE pet.parent = NULL', $rsm);
+            SELECT * FROM pet WHERE pet.parent_id IS NULL', $rsm);
 
         return $query->getResult();
 

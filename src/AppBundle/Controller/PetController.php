@@ -16,27 +16,37 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PetController extends Controller
 {
+    private $petService;
 
-    public function addPetAction(Request $request, PetService $petService){
+    public function __construct(PetService $petService)
+    {
+        $this->petService = $petService;
+    }
+
+    public function addPetAction(Request $request){
         $form = $this->createForm(PetForm::class);
         $form->handleRequest($request);
 
-        if($form->isValid() && $form->isSubmitted()){
-            $pet = $form->getData();
-            $petService->addPet($pet);
-            return $this->redirect($request->getUri());
+        if($form->isSubmitted()){
+            if($form->isValid()) {
+                $pet = $form->getData();
+                $this->petService->addPet($pet);
+                return $this->redirect($request->getUri());
+            }
         }
 
         return $this->render('pet/pet_creation.html.twig', array('form' => $form->createView(),));
 
     }
 
-    public function showPetsByKindAction(Request $request){
-
+    public function showPetsByKindAction($id = null, Request $request){
+        $pets = $this->petService->getPetsByKindParent($id);
+        return $this->render('pet/pets_view.html.twig', array('pets' => $pets));
     }
 
-    public function showPetDetailsAction(Request $request){
-
+    public function showPetDetailsAction($id, Request $request){
+        $pet = $this->petService->getPetDetails($id);
+        return $this->render('pet/pet_details.html.twig', array('pet' => $pet));
     }
 
 }

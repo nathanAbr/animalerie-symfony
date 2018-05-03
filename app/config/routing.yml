@@ -1,3 +1,15 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+add_pet:
+    path: '/pet/add'
+    defaults: {_controller: AppBundle:Pet:addPet}
+
+show_pets_by_kind:
+    path: '/pets/{id}'
+    defaults: {_controller: AppBundle:Pet:showPetByKind}
+
+show_pet_details:
+    path: '/pet/{id}'
+    defaults: {_controller: AppBundle:Pet:showPetDetails}
