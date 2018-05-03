@@ -1,28 +1,46 @@
 <?php
 
 namespace AppBundle\Repository;
-
-use AppBundle\AppBundle;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use AppBundle\Entity\Indent;
-use AppBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 
-class IndentRepository extends \Doctrine\ORM\EntityRepository
+class IndentRepository extends EntityRepository
 {
-    public function  existPanier($userId){
+    public function existPanier($userId)
+    {
+        $indent = "Indent";
 
-        $em = $this->getEntityManager();
-        $queryBuilder =  $em->createQueryBuilder();
-        $queryBuilder->select('indent')
-                        ->from ('AppBundle:Indent','indent')
-                        ->where('indent.user_id=:userId')
-                        ->andWhere('indent.indentNumber IS NULL')
-                        ->setParameter('userId',$userId);
-        return $queryBuilder->getQuery()->getResult();
+        $sql = "SELECT i.* "
 
-        /*
-        $con = Doctrine_Manager::getInstance()->connection();
-        $st = $con->execute("SELECT id FROM indent WHERE user_id = $id AND indentNumber IS NULL ");
-        return $result = $st->fetchAll();*/
+            . "FROM " . $indent . " AS i "
 
+            . "WHERE i.indentNumber is NULL  "
+
+            . "AND i.user_id= :userId";
+
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+
+        $rsm->addEntityResult(Indent::class, "i");
+
+
+        // On mappe le nom de chaque colonne en base de données sur les attributs de nos entités
+
+        foreach ($this->getClassMetadata()->fieldMappings as $obj) {
+
+            $rsm->addFieldResult("i", $obj["columnName"], $obj["fieldName"]);
+
+        }
+
+
+        $stmt = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+
+        $stmt->setParameter(":userId", $userId);
+
+        $stmt->execute();
+
+        // ON RETOURNE UN  TABLEAU d'OBJETS
+
+        return $stmt->getResult();
     }
 }
