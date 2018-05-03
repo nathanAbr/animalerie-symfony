@@ -13,7 +13,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class PetRepository extends EntityRepository
 {
-    public function findPetsByKind(){
+    public function findPetsByKind($id = null){
         $rsm = new ResultSetMapping();
         $rsm->addEntityResult('AppBundle:Pet', 'pet');
         $rsm->addFieldResult('pet', 'id', 'id');
@@ -23,6 +23,7 @@ class PetRepository extends EntityRepository
             with recursive cte as (
                     SELECT pet.id, pet.parent
                     FROM   pet
+                    WHERE  pet.parent = ?
             
                     UNION  ALL
             
@@ -31,6 +32,8 @@ class PetRepository extends EntityRepository
                     JOIN   group e ON e.id = c.parent
              )
             SELECT * FROM cte;', $rsm);
+
+        $query->setParameter(1, $id);
 
         return $query->getResult();
     }

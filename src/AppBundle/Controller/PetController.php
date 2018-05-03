@@ -35,7 +35,7 @@ class PetController extends Controller
 
     }
 
-    public function showPetDatails(Request $request){
+    public function showPetDetailsAction(Request $request){
 
     }
 
