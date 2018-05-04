@@ -29,7 +29,7 @@ class Pet extends Product
     private $label;
 
     /**
-     * @var Pet
+     * @var Pet[]
      *
      * @ORM\OneToMany(targetEntity="Pet", mappedBy="parent")
      */
@@ -39,6 +39,7 @@ class Pet extends Product
      * @var Pet
      *
      * @ORM\ManyToOne(targetEntity="Pet", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
 

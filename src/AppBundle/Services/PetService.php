@@ -25,8 +25,12 @@ class PetService
         $this->repository = $this->entityManager->getRepository(Pet::class);
     }
 
-    public function getPetByKind(){
-        return $this->repository->findPetsByKind();
+    public function getPetsByKindParent($id = null){
+        return $this->repository->findPetsByKindParent($id);
+    }
+
+    public function getPetsByKind(){
+        return $this->repository->findAll();
     }
 
     public function getFirstKindOfPet(){
@@ -40,5 +44,9 @@ class PetService
         } catch (DBALException $e){
             return $e->getMessage();
         }
+    }
+
+    public function getPetDetails($id){
+        return $this->repository->find($id);
     }
 }

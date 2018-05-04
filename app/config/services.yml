@@ -1,7 +1,7 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
 parameters:
-    #parameter_name: value
+    upload_directory: '%kernel.project_dir%/public/uploads'
 
 services:
     # default configuration for services in *this* file
@@ -41,12 +41,16 @@ services:
         class: AppBundle\Service\IndentService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
+
     product_service:
         class: AppBundle\Services\ProductService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
     pet_service:
         class: AppBundle\Services\PetService
+
+    indentDetails_service:
+        class: AppBundle\Service\IndentDetailsService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
     object_service:
@@ -60,3 +64,8 @@ services:
     picture_service:
         class: AppBundle\Services\PictureService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
+
+    file_uploader_service:
+        class: AppBundle\Services\FileUploaderService
+        arguments:
+            $targetDirectory: '%upload_directory%'

@@ -1,12 +1,15 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
 create_user:
     path: /create/user
     defaults: {_controller: AppBundle:User:add}
+    
 create_panier:
     path: /create/panier
     defaults: {_controller: AppBundle:Indent:createIndent}
+
 home:
     path: /home
     controller: AppBundle\Controller\HomeController::homeAction
@@ -26,3 +29,19 @@ fos_user_resetting:
 fos_user_change_password:    
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"    
     prefix: /profile
+
+create_indentDetails:
+    path: /create/indentdetails
+    defaults: {_controller: AppBundle:IndentDetails:addDetails}
+
+add_pet:
+    path: '/pet/add'
+    defaults: {_controller: AppBundle:Pet:addPet}
+
+show_pets_by_kind:
+    path: '/pets/{id}'
+    defaults: {_controller: AppBundle:Pet:showPetsByKind}
+
+show_pet_details:
+    path: '/pet/{id}'
+    defaults: {_controller: AppBundle:Pet:showPetDetails}

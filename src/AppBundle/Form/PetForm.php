@@ -11,12 +11,12 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Pet;
 use AppBundle\Services\PetService;
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,12 +32,20 @@ class PetForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('label', TextType::class)
-            ->add('price', MoneyType::class)
-            ->add('quantity', NumberType::class)
-            ->add('type', ChoiceType::class, array(
-                'choices' => $this->petService->getPetByKind(),
+            ->add('price', MoneyType::class, array(
+                'required' => false
             ))
-            ->add('picture', TextType::class)
+            ->add('quantity', NumberType::class,array(
+                'required' => false
+            ))
+            ->add('parent', ChoiceType::class, array(
+                'choices' => $this->petService->getPetsByKind(),
+                'choice_label' => 'label',
+                'required' => false,
+            ))
+            ->add('pictures', PictureForm::class, array(
+                'required' => false
+            ))
             ->add('save', SubmitType::class);
     }
 
