@@ -43,7 +43,7 @@ class PetForm extends AbstractType
                 'choice_label' => 'label',
                 'required' => false,
             ))
-            ->add('pictures', TextType::class, array(
+            ->add('pictures', PictureForm::class, array(
                 'required' => false
             ))
             ->add('save', SubmitType::class);
