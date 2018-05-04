@@ -16,11 +16,9 @@ class IndentService
     public function __construct(EntityManagerInterface $entityManager)
 
     {
-
         $this->entityManager = $entityManager;
 
         $this->repository = $this->entityManager->getRepository(Indent::class);
-
     }
 
 

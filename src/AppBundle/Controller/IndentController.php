@@ -17,7 +17,7 @@ class IndentController extends Controller
 {
 
     public function createIndentAction(IndentService $indentService)
-
+        /*ATTENTION ENLEVER LA VALEUR EN DUR - 6  UNIQUEMENT POUR TESTER */
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneBy(['id'=>6]);
