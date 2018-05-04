@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
@@ -40,6 +41,8 @@ class Product
      * @var Picture[]
      *
      * @ORM\ManyToMany(targetEntity="Picture", mappedBy="products")
+     * @Assert\NotBlank(message="Please, upload the product picture.")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
      */
     private $pictures;
 

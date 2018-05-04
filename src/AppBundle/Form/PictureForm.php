@@ -24,12 +24,12 @@ class PictureForm extends AbstractType
     {
         $builder
             ->add('url', FileType::class, array(
-                'required' => true
+                'required' => true,
+                'multiple' => true,
             ))
             ->add('description', TextType::class,array(
                 'required' => false
-            ))
-            ->add('save', SubmitType::class);
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

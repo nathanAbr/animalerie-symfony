@@ -65,7 +65,6 @@ services:
         class: AppBundle\Services\PictureService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
-    file_uploader_service:
-        class: AppBundle\Services\FileUploaderService
-        arguments:
-            $targetDirectory: '%upload_directory%'
+    AppBundle\Services\FileUploaderService:
+            arguments:
+                $targetDirectory: '%upload_directory%'
