@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class IndentController extends Controller
 {
-
     public function createIndentAction(IndentService $indentService)
         /*ATTENTION ENLEVER LA VALEUR EN DUR - 6  UNIQUEMENT POUR TESTER */
     {
@@ -24,6 +23,4 @@ class IndentController extends Controller
         $indent = $indentService->getIndent($user);
         return $this->render('indent/indent.html.twig', ['indent'=>$indent,'user'=>$user]);
     }
-
-
 }
