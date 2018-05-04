@@ -1,8 +1,6 @@
 <?php
 
-
 namespace AppBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Service\UserService;
 use AppBundle\Form\UserForm;

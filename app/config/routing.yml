@@ -1,13 +1,21 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
 create_user:
     path: /create/user
     defaults: {_controller: AppBundle:User:add}
 
-create_pannier:
+create_panier:
     path: /create/panier
     defaults: {_controller: AppBundle:Indent:createIndent}
+
 home:
     path: /home
     controller: AppBundle\Controller\HomeController::homeAction
+
+
+create_indentDetails:
+    path: /create/indentdetails
+    defaults: {_controller: AppBundle:IndentDetails:addDetails}
+

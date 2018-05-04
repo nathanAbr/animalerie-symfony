@@ -41,12 +41,16 @@ services:
         class: AppBundle\Service\IndentService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
+
     product_service:
         class: AppBundle\Services\ProductService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
     pet_service:
         class: AppBundle\Services\PetService
+
+    indentDetails_service:
+        class: AppBundle\Service\IndentDetailsService
         arguments: ["@=service('doctrine.orm.entity_manager')"]
 
     object_service:

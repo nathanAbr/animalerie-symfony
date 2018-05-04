@@ -17,12 +17,12 @@ class IndentController extends Controller
 {
 
     public function createIndentAction(IndentService $indentService)
-
+        /*ATTENTION ENLEVER LA VALEUR EN DUR - 6  UNIQUEMENT POUR TESTER */
     {
-        $em = $this->getDoctrine()->getManager(();
-        $user = $em->getRepository('AppBundle:User')->findOneBy(['id',6]);
-        $indentService->getIndent($user);
-
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['id'=>6]);
+        $indent = $indentService->getIndent($user);
+        return $this->render('indent/indent.html.twig', ['indent'=>$indent,'user'=>$user]);
     }
 
 
