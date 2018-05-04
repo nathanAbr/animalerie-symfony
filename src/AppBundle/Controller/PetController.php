@@ -9,6 +9,8 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\AppBundle;
+use AppBundle\Entity\Pet;
 use AppBundle\Form\PetForm;
 use AppBundle\Services\PetService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -41,7 +43,8 @@ class PetController extends Controller
 
     public function showPetsByKindAction($id = null, Request $request){
         $pets = $this->petService->getPetsByKindParent($id);
-        return $this->render('pet/pets_view.html.twig', array('pets' => $pets));
+        $parent = $this->petService->getPetDetails($id);
+        return $this->render('pet/pets_view.html.twig', array('pets' => $pets, 'parent' => $parent));
     }
 
     public function showPetDetailsAction($id, Request $request){

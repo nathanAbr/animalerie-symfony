@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li>{{ parent[0].label }}
+            <ul>
+            {% for pet in pets %}
+                <li>{{ pet.label }}</li>
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>
+{% endblock %}
