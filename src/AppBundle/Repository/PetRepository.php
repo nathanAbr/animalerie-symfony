@@ -2,8 +2,10 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Pet;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * PetRepository
@@ -13,28 +15,28 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class PetRepository extends EntityRepository
 {
-    public function findPetsByKind($id = null){
-        $rsm = new ResultSetMapping();
-        $rsm->addEntityResult('AppBundle:Pet', 'pet');
-        $rsm->addFieldResult('pet', 'id', 'id');
-        $rsm->addFieldResult('pet', 'parent', 'parent');
+    public function findPetsByKindParent($id = null){
 
-        $query = $this->getEntityManager()->createNativeQuery('
-            with recursive cte as (
-                    SELECT pet.id, pet.parent
-                    FROM   pet
-                    WHERE  pet.parent = ?
-            
-                    UNION  ALL
-            
-                    SELECT e.id, e.parent
-                    FROM   cte c
-                    JOIN   group e ON e.id = c.parent
-             )
-            SELECT * FROM cte;', $rsm);
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addEntityResult(Pet::class, 'pet');
 
-        $query->setParameter(1, $id);
+        foreach ($this->getClassMetadata()->fieldMappings as $obj) {
+            $rsm->addFieldResult("pet", $obj["columnName"], $obj["fieldName"]);
+        }
 
+        if($id === null){
+            $query = $this->getEntityManager()->createNativeQuery('
+            SELECT a.* FROM pet p
+              JOIN pet a ON p.id = a.parent_id
+              WHERE p.parent_id IS NULL', $rsm);
+        } else {
+            $query = $this->getEntityManager()->createNativeQuery('
+            SELECT a.* FROM pet p
+              JOIN pet a ON p.id = a.parent_id
+              WHERE p.id = ?', $rsm);
+
+            $query->setParameter(1, $id);
+        }
         return $query->getResult();
     }
 
@@ -43,9 +45,26 @@ class PetRepository extends EntityRepository
         $rsm = new ResultSetMapping();
 
         $query = $this->getEntityManager()->createNativeQuery('
-            SELECT pet.label FROM pet WHERE pet.parent = NULL', $rsm);
+            SELECT * FROM pet WHERE pet.parent_id IS NULL', $rsm);
 
         return $query->getResult();
 
+    }
+
+    public function find($id){
+
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addEntityResult(Pet::class, 'pet');
+
+        foreach ($this->getClassMetadata()->fieldMappings as $obj) {
+            $rsm->addFieldResult("pet", $obj["columnName"], $obj["fieldName"]);
+        }
+
+        $query = $this->getEntityManager()->createNativeQuery('
+            SELECT * FROM pet p WHERE p.id = ?', $rsm);
+
+        $query->setParameter(1, $id);
+        $query->execute();
+        return $query->getResult();
     }
 }

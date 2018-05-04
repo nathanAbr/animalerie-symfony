@@ -24,14 +24,14 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $price;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="quantity", type="integer")
+     * @ORM\Column(name="quantity", type="integer", nullable=true)
      */
     private $quantity;
 

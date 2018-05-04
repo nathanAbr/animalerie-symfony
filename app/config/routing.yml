@@ -19,3 +19,14 @@ create_indentDetails:
     path: /create/indentdetails
     defaults: {_controller: AppBundle:IndentDetails:addDetails}
 
+add_pet:
+    path: '/pet/add'
+    defaults: {_controller: AppBundle:Pet:addPet}
+
+show_pets_by_kind:
+    path: '/pets/{id}'
+    defaults: {_controller: AppBundle:Pet:showPetsByKind}
+
+show_pet_details:
+    path: '/pet/{id}'
+    defaults: {_controller: AppBundle:Pet:showPetDetails}

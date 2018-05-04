@@ -11,13 +11,14 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Object;
 use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ObjectForm
+class ObjectForm extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -26,6 +27,7 @@ class ObjectForm
             ->add('price', MoneyType::class)
             ->add('quantity', NumberType::class)
             ->add('picture', TextType::class)
+            ->add('type', ObjectTypeForm::class)
             ->add('save', SubmitType::class);
     }
 
