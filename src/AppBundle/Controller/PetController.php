@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\AppBundle;
 use AppBundle\Entity\Pet;
+use AppBundle\Entity\Picture;
 use AppBundle\Form\PetForm;
 use AppBundle\Services\PetService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,6 +33,7 @@ class PetController extends Controller
         if($form->isSubmitted()){
             if($form->isValid()) {
                 $pet = $form->getData();
+                $picture = new Picture();
                 $this->petService->addPet($pet);
                 return $this->redirect($request->getUri());
             }
