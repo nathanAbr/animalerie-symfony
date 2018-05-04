@@ -15,15 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class IndentController extends Controller
 {
-
     public function createIndentAction(IndentService $indentService)
-
     {
-        $em = $this->getDoctrine()->getManager(();
+        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneBy(['id',6]);
         $indentService->getIndent($user);
 
     }
-
-
 }

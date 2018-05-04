@@ -2,15 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * User
+ * Users
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var int
@@ -19,49 +20,56 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
+    
+    
+    public function __construct()    
+    {
+        $this->indents = new \Doctrine\Common\Collections\ArrayCollection();
+        parent::__construct();    
+    }
 
     /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
+    protected $password;
 
     /**
-     * @var string
+     *  @var string
      *
      * @ORM\Column(name="adress", type="string", length=255, nullable=true,unique=false)
      */
-    private $adress;
+    protected $adress;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="admin", type="boolean",nullable=true,unique=false,options={"default"=0})
      */
-    private $admin;
+    protected $admin;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="active", type="boolean",nullable=true,unique=false,options={"default"=1})
      */
-    private $active;
+    protected $active;
 
 
 
     /**
      * @ORM\OneToMany(targetEntity="Indent", mappedBy="user")
      */
-    private $indents;
+    protected $indents;
     /**
      * Get id
      *
@@ -191,13 +199,6 @@ class User
     public function getActive()
     {
         return $this->active;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->indents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

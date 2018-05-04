@@ -73,7 +73,7 @@
             {% for item in items %}
                 {% if item.parent() is null %}
                     {% if item.children() is empty %}
-                        <a href="{{ item.Path }}"> {{ item.Label }} </a>
+                        <a href="/{{ item.Path }}"> {{ item.Label }} </a>
                     {% else %}   
                         <div class="dropdown">
                             <button class="dropbtn"> {{ item.Label }} 
@@ -81,7 +81,7 @@
                             </button>
                             <div class="dropdown-content">
                                 {% for child in item.children() %}
-                                    <a href="{{ item.Path }}"> {{ child.Label }} </a>
+                                    <a href="/{{ item.Path }}"> {{ child.Label }} </a>
                                 {% endfor %}
                             </div>
                         </div>
