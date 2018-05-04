@@ -8,11 +8,10 @@
 
 namespace AppBundle\Controller;
 
-
-use AppBundle\AppBundle;
 use AppBundle\Entity\Pet;
 use AppBundle\Entity\Picture;
 use AppBundle\Form\PetForm;
+use AppBundle\Services\FileUploaderService;
 use AppBundle\Services\PetService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,14 +25,27 @@ class PetController extends Controller
         $this->petService = $petService;
     }
 
-    public function addPetAction(Request $request){
+    public function addPetAction(Request $request, FileUploaderService $fileUploader){
+
         $form = $this->createForm(PetForm::class);
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
             if($form->isValid()) {
-                $pet = $form->getData();
-                $picture = new Picture();
+                $pet = new Pet();
+                foreach($form->get('pictures') as $picture){
+                    $p = new Picture();
+                    $p->setDescription($picture->get('description'));
+                    $p->setUrl($picture->get('url'));
+                    $pet->addPicture($p);
+                }
+                foreach($pet->getPictures() as $picture){
+                    $fileUploader->upload($picture);
+                }
+                $pet->setLabel($form->get('label'));
+                $pet->setQuantity($form->get('quantity'));
+                $pet->setParent($form->get('parent'));
+                $pet->setPrice($form->get('price'));
                 $this->petService->addPet($pet);
                 return $this->redirect($request->getUri());
             }
