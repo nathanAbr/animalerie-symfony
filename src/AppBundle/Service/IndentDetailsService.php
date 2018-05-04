@@ -25,8 +25,7 @@ class IndentDetailsService
     public function add($indentDetails){
         try{
             //$quantite, $indent
-
-            $indent = 2;
+            $indent = $this->entityManager->getRepository('AppBundle:Indent')->findOneBy(['id'=>2]);
             $indentDetails->setIndent($indent);
             $this->entityManager->persist($indentDetails);
             $this->entityManager->flush();
